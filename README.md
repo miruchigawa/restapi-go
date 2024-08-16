@@ -530,4 +530,4 @@ Important: The version control system revision number will only be available aft
 
 ## Changing the module path
 
-The module path is currently set to `moruchigawa.moe/restapi`. If you want to change this please find and replace all instances of `moruchigawa.moe/restapi` in the codebase with your own module path.
+The module path is currently set to `miruchigawa.moe/restapi`. If you want to change this please find and replace all instances of `miruchigawa.moe/restapi` in the codebase with your own module path.
