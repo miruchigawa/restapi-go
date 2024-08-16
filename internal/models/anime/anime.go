@@ -1,28 +1,28 @@
 package anime
 
 type SearchResult struct {
-	CurrentPage int           
-	HasNextPage bool          
-	Results     []AnimeResult 
+	CurrentPage int
+	HasNextPage bool
+	Results     []AnimeResult
 }
 
 type AnimeResult struct {
-	ID          string 
-	Title       string 
-	URL         string 
-	Image       string 
-	ReleaseDate string 
-	SubOrDub    SubOrDub 
+	ID          string
+	Title       string
+	URL         string
+	Image       string
+	ReleaseDate string
+	SubOrDub    SubOrDub
 }
 
-type MediaFormat string 
+type MediaFormat string
 
 const (
 	ANIME MediaFormat = "ANIME"
 	MOVIE MediaFormat = "MOVIE"
 )
 
-type MediaStatus string 
+type MediaStatus string
 
 const (
 	ONGOING       MediaStatus = "ONGOING"
@@ -31,7 +31,7 @@ const (
 	UNKNOWN       MediaStatus = "UNKNOWN"
 )
 
-type SubOrDub string 
+type SubOrDub string
 
 const (
 	SUB SubOrDub = "SUB"
@@ -45,22 +45,22 @@ type Episode struct {
 }
 
 type AnimeInfo struct {
-	ID 					string 
-	Title 			string 
-	URL 				string 
-	Image 			string 
-	ReleaseDate string 
-	Description string 
-	SubOrDub    SubOrDub 		
-	Type        MediaFormat 
-	Status      MediaStatus 
-	OtherName   string 			
-	Genres      []string 		
-	TotalEpisodes int 			
-	Episodes    []Episode 	
+	ID            string
+	Title         string
+	URL           string
+	Image         string
+	ReleaseDate   string
+	Description   string
+	SubOrDub      SubOrDub
+	Type          MediaFormat
+	Status        MediaStatus
+	OtherName     string
+	Genres        []string
+	TotalEpisodes int
+	Episodes      []Episode
 }
 
 type EpisodeServer struct {
-	Name string 
-	URL  string 
+	Name string
+	URL  string
 }

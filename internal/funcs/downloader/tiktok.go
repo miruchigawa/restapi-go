@@ -7,8 +7,8 @@ import (
 )
 
 func TiktokDownloader(url string) (*models.TiktokResult, error) {
-  result := &models.TiktokResult{}
-  c := colly.NewCollector()
+	result := &models.TiktokResult{}
+	c := colly.NewCollector()
 
 	c.OnHTML("div.flex h2", func(e *colly.HTMLElement) {
 		result.Nickname = e.Text
@@ -38,16 +38,16 @@ func TiktokDownloader(url string) (*models.TiktokResult, error) {
 		case 3:
 			result.Shared = e.Text
 		case 4:
-      result.Song = e.Text
+			result.Song = e.Text
 		}
 	})
-	
+
 	c.OnHTML("#button-download-ready a", func(e *colly.HTMLElement) {
-	  link := e.Attr("href")
+		link := e.Attr("href")
 
 		switch e.Index {
 		case 0:
-		  result.Video = link
+			result.Video = link
 		case 2:
 			result.Audio = link
 		case 4:
@@ -55,7 +55,7 @@ func TiktokDownloader(url string) (*models.TiktokResult, error) {
 		}
 	})
 
-  err := c.Post("https://ttsave.app/download", map[string]string{
+	err := c.Post("https://ttsave.app/download", map[string]string{
 		"language_id": "1",
 		"query":       url,
 	})

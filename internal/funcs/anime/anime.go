@@ -2,9 +2,9 @@ package anime
 
 import (
 	"fmt"
-	"strings"
-	"strconv"
 	"net/url"
+	"strconv"
+	"strings"
 
 	"github.com/gocolly/colly/v2"
 
@@ -29,7 +29,7 @@ func Search(query string, page int) (*models.SearchResult, error) {
 		if e.DOM.Next().Length() > 0 {
 			searchResult.HasNextPage = true
 		}
-	})	
+	})
 
 	c.OnHTML("div.last_episodes > ul > li", func(e *colly.HTMLElement) {
 		result := models.AnimeResult{
@@ -57,7 +57,7 @@ func Search(query string, page int) (*models.SearchResult, error) {
 }
 
 func Info(id string) (*models.AnimeInfo, error) {
-	result := &models.AnimeInfo{ Episodes: []models.Episode{} }
+	result := &models.AnimeInfo{Episodes: []models.Episode{}}
 
 	if !strings.Contains(id, "gogoanime") {
 		id = fmt.Sprintf("%s/category/%s", baseURL, id)
@@ -65,7 +65,7 @@ func Info(id string) (*models.AnimeInfo, error) {
 
 	c := colly.NewCollector()
 
-	c.OnHTML("body", func (e *colly.HTMLElement) {
+	c.OnHTML("body", func(e *colly.HTMLElement) {
 		u, err := url.Parse(id)
 		if err != nil {
 			return
@@ -83,7 +83,7 @@ func Info(id string) (*models.AnimeInfo, error) {
 		result.Description = strings.TrimPrefix(e.ChildText("div.anime_info_body_bg > div:nth-child(6)"), "Plot Summary: ")
 		result.SubOrDub = determineSubOrDub(result.Title)
 		result.Type = models.MediaFormat(strings.Split(strings.ToUpper(e.ChildText("div.anime_info_body_bg > p:nth-child(4) > a")), " ")[2])
-		
+
 		status := e.ChildText("div.anime_info_body_bg > p:nth-child(9) > a")
 		switch status {
 		case "Ongoing":
@@ -100,12 +100,12 @@ func Info(id string) (*models.AnimeInfo, error) {
 		e.ForEach("div.anime_info_body_bg > p:nth-child(7) > a", func(_ int, el *colly.HTMLElement) {
 			result.Genres = append(result.Genres, el.Attr("title"))
 		})
-		
+
 		epStart := e.DOM.Find("#episode_page > li").First().Find("a").AttrOr("ep_start", "")
 		epEnd := e.DOM.Find("#episode_page > li").Last().Find("a").AttrOr("ep_end", "")
 		movieID := e.ChildAttr("#movie_id", "value")
 		alias := e.ChildAttr("#alias_anime", "value")
-		
+
 		episodes, err := FetchEpisode(epStart, epEnd, movieID, alias)
 		if err != nil {
 			return

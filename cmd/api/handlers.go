@@ -1,15 +1,15 @@
 package main
 
 import (
-	"strings"
-	"strconv"
 	"net/http"
+	"strconv"
+	"strings"
 
-	"miruchigawa.moe/restapi/internal/response"
-	"miruchigawa.moe/restapi/internal/version"
 	"miruchigawa.moe/restapi/internal/funcs/anime"
 	"miruchigawa.moe/restapi/internal/funcs/downloader"
+	"miruchigawa.moe/restapi/internal/response"
 	"miruchigawa.moe/restapi/internal/validator"
+	"miruchigawa.moe/restapi/internal/version"
 )
 
 func (app *application) status(w http.ResponseWriter, r *http.Request) {
@@ -35,17 +35,17 @@ func (app *application) animeSearch(w http.ResponseWriter, r *http.Request) {
 	if queryName := query.Get("query"); queryName != "" {
 		name = strings.TrimSpace(queryName)
 		v.Check(len(name) > 0, "query can't be empty!")
-	}else{
+	} else {
 		v.AddError("query can't be empty!")
 	}
 
 	if pageQuery := query.Get("page"); pageQuery != "" {
 		if num, err := strconv.Atoi(pageQuery); err == nil || num < 1 {
 			page = num
-		}else{
+		} else {
 			v.AddError("Invalid page number format!")
 		}
-	}else{
+	} else {
 		page = 1
 	}
 
@@ -53,7 +53,7 @@ func (app *application) animeSearch(w http.ResponseWriter, r *http.Request) {
 		app.failedValidation(w, r, v)
 		return
 	}
-	
+
 	result, err := anime.Search(name, page)
 	if err != nil {
 		app.serverError(w, r, err)
@@ -61,9 +61,9 @@ func (app *application) animeSearch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := map[string]any{
-		"Status": "OK",
+		"Status":  "OK",
 		"Message": result,
-	}	
+	}
 
 	if err := response.JSON(w, http.StatusOK, data); err != nil {
 		app.serverError(w, r, err)
@@ -78,7 +78,7 @@ func (app *application) animeInfo(w http.ResponseWriter, r *http.Request) {
 	if queryId := query.Get("id"); queryId != "" {
 		id = strings.TrimSpace(queryId)
 		v.Check(len(id) > 0, "id can't be empty!")
-	}else{
+	} else {
 		v.AddError("id can't be empty!")
 	}
 
@@ -94,9 +94,9 @@ func (app *application) animeInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := map[string]any{
-		"Status": "OK",
+		"Status":  "OK",
 		"Message": result,
-	}	
+	}
 
 	if err := response.JSON(w, http.StatusOK, data); err != nil {
 		app.serverError(w, r, err)
@@ -111,7 +111,7 @@ func (app *application) animeDownload(w http.ResponseWriter, r *http.Request) {
 	if queryId := query.Get("id"); queryId != "" {
 		id = strings.TrimSpace(queryId)
 		v.Check(len(id) > 0, "id can't be empty!")
-	}else{
+	} else {
 		v.AddError("id can't be empty!")
 	}
 
@@ -127,13 +127,13 @@ func (app *application) animeDownload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := map[string]any{
-		"Status": "OK",
+		"Status":  "OK",
 		"Message": result,
-	}	
+	}
 
 	if err := response.JSON(w, http.StatusOK, data); err != nil {
 		app.serverError(w, r, err)
-	}	
+	}
 }
 
 func (app *application) mediafire(w http.ResponseWriter, r *http.Request) {
@@ -144,7 +144,7 @@ func (app *application) mediafire(w http.ResponseWriter, r *http.Request) {
 	if queryUrl := query.Get("url"); queryUrl != "" {
 		url = strings.TrimSpace(queryUrl)
 		v.Check(len(url) > 0, "url can't be empty!")
-	}else{
+	} else {
 		v.AddError("url can't be empty!")
 	}
 
@@ -152,7 +152,7 @@ func (app *application) mediafire(w http.ResponseWriter, r *http.Request) {
 		app.failedValidation(w, r, v)
 		return
 	}
-	
+
 	result, err := downloader.GetMediafireInfo(url)
 	if err != nil {
 		app.serverError(w, r, err)
@@ -160,9 +160,9 @@ func (app *application) mediafire(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := map[string]any{
-		"Status": "OK",
+		"Status":  "OK",
 		"Message": result,
-	}	
+	}
 
 	if err := response.JSON(w, http.StatusOK, data); err != nil {
 		app.serverError(w, r, err)
@@ -178,7 +178,7 @@ func (app *application) tiktokDownloader(w http.ResponseWriter, r *http.Request)
 	if queryUrl := query.Get("url"); queryUrl != "" {
 		url = strings.TrimSpace(queryUrl)
 		v.Check(len(url) > 0, "url can't be empty!")
-	}else{
+	} else {
 		v.AddError("url can't be empty!")
 	}
 
@@ -186,7 +186,7 @@ func (app *application) tiktokDownloader(w http.ResponseWriter, r *http.Request)
 		app.failedValidation(w, r, v)
 		return
 	}
-	
+
 	result, err := downloader.TiktokDownloader(url)
 	if err != nil {
 		app.serverError(w, r, err)
@@ -194,9 +194,9 @@ func (app *application) tiktokDownloader(w http.ResponseWriter, r *http.Request)
 	}
 
 	data := map[string]any{
-		"Status": "OK",
+		"Status":  "OK",
 		"Message": result,
-	}	
+	}
 
 	if err := response.JSON(w, http.StatusOK, data); err != nil {
 		app.serverError(w, r, err)

@@ -70,7 +70,7 @@ func (app *application) badRequest(w http.ResponseWriter, r *http.Request, err e
 
 func (app *application) failedValidation(w http.ResponseWriter, r *http.Request, v validator.Validator) {
 	data := map[string]any{
-		"Status": "ERROR",
+		"Status":  "ERROR",
 		"Message": v,
 	}
 	err := response.JSON(w, http.StatusUnprocessableEntity, data)
