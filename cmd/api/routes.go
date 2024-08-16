@@ -18,7 +18,8 @@ func (app *application) routes() http.Handler {
 	mux.HandleFunc("/status", app.status).Methods("GET")
 	mux.HandleFunc("/anime/search", app.animeSearch).Methods("GET")
 	mux.HandleFunc("/anime/info", app.animeInfo).Methods("GET")
-	mux.HandleFunc("/anime/download", app.animeDownload).Methods("GET")
+	mux.HandleFunc("/downloader/mediafire", app.mediafire).Methods("GET")
+	mux.HandleFunc("/downloader/tiktok", app.tiktokDownloader).Methods("GET")
 
 	return mux
 }

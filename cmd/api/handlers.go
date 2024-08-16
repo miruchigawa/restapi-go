@@ -8,6 +8,7 @@ import (
 	"miruchigawa.moe/restapi/internal/response"
 	"miruchigawa.moe/restapi/internal/version"
 	"miruchigawa.moe/restapi/internal/funcs/anime"
+	"miruchigawa.moe/restapi/internal/funcs/downloader"
 	"miruchigawa.moe/restapi/internal/validator"
 )
 
@@ -133,4 +134,72 @@ func (app *application) animeDownload(w http.ResponseWriter, r *http.Request) {
 	if err := response.JSON(w, http.StatusOK, data); err != nil {
 		app.serverError(w, r, err)
 	}	
+}
+
+func (app *application) mediafire(w http.ResponseWriter, r *http.Request) {
+	var url string
+	query := r.URL.Query()
+	v := validator.Validator{}
+
+	if queryUrl := query.Get("url"); queryUrl != "" {
+		url = strings.TrimSpace(queryUrl)
+		v.Check(len(url) > 0, "url can't be empty!")
+	}else{
+		v.AddError("url can't be empty!")
+	}
+
+	if v.HasErrors() {
+		app.failedValidation(w, r, v)
+		return
+	}
+	
+	result, err := downloader.GetMediafireInfo(url)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	data := map[string]any{
+		"Status": "OK",
+		"Message": result,
+	}	
+
+	if err := response.JSON(w, http.StatusOK, data); err != nil {
+		app.serverError(w, r, err)
+	}
+
+}
+
+func (app *application) tiktokDownloader(w http.ResponseWriter, r *http.Request) {
+	var url string
+	query := r.URL.Query()
+	v := validator.Validator{}
+
+	if queryUrl := query.Get("url"); queryUrl != "" {
+		url = strings.TrimSpace(queryUrl)
+		v.Check(len(url) > 0, "url can't be empty!")
+	}else{
+		v.AddError("url can't be empty!")
+	}
+
+	if v.HasErrors() {
+		app.failedValidation(w, r, v)
+		return
+	}
+	
+	result, err := downloader.TiktokDownloader(url)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	data := map[string]any{
+		"Status": "OK",
+		"Message": result,
+	}	
+
+	if err := response.JSON(w, http.StatusOK, data); err != nil {
+		app.serverError(w, r, err)
+	}
+
 }

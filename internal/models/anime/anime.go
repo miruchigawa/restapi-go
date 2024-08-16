@@ -1,18 +1,18 @@
 package anime
 
 type SearchResult struct {
-	CurrentPage int           `json:"CurrentPage"`
-	HasNextPage bool          `json:"HasNextPage"`
-	Results     []AnimeResult `json:"Results"`
+	CurrentPage int           
+	HasNextPage bool          
+	Results     []AnimeResult 
 }
 
 type AnimeResult struct {
-	ID          string `json:"Id"`
-	Title       string `json:"Title"`
-	URL         string `json:"Url"`
-	Image       string `json:"Image"`
-	ReleaseDate string `json:"ReleaseDate"`
-	SubOrDub    SubOrDub `json:"SubOrDub"`
+	ID          string 
+	Title       string 
+	URL         string 
+	Image       string 
+	ReleaseDate string 
+	SubOrDub    SubOrDub 
 }
 
 type MediaFormat string 
@@ -45,22 +45,22 @@ type Episode struct {
 }
 
 type AnimeInfo struct {
-	ID 					string `json:"Id`
-	Title 			string `json:"Title"`
-	URL 				string `json:"Url"`
-	Image 			string `json:"Image"`
-	ReleaseDate string `json:"ReleaseDate"`
-	Description string `json:"Description"`
-	SubOrDub    SubOrDub 		`json:"SubOrDub`
-	Type        MediaFormat `json:"Type"`
-	Status      MediaStatus `json:"Status"`
-	OtherName   string 			`json:"OtherName"`
-	Genres      []string 		`json:"Genres"`
-	TotalEpisodes int 			`json:"TotalEpisodes"`
-	Episodes    []Episode 	`json:"Episodes"`
+	ID 					string 
+	Title 			string 
+	URL 				string 
+	Image 			string 
+	ReleaseDate string 
+	Description string 
+	SubOrDub    SubOrDub 		
+	Type        MediaFormat 
+	Status      MediaStatus 
+	OtherName   string 			
+	Genres      []string 		
+	TotalEpisodes int 			
+	Episodes    []Episode 	
 }
 
 type EpisodeServer struct {
-	Name string `json:"Name"`
-	URL  string `json:"URL"`
+	Name string 
+	URL  string 
 }
